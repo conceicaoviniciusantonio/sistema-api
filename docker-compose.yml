@@ -1,0 +1,24 @@
+version: '3.1'
+
+services:
+
+  mysql:
+    image: mysql:5.7
+    environment:
+      MYSQL_DATABASE: teste
+      MYSQL_USER: root
+      MYSQL_ROOT_PASSWORD: mysql123
+      MYSQL_PASSWORD: mysql123
+    ports:
+      - "3306:3306"
+    volumes:
+      - /home/vinicius/HomeWorks/Docker/Volumes/MySql:/var/lib/mysql
+  api:
+    image: viniroxrock/servidor_web:v1
+    container_name: api
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/teste?autoReconnect=true&useSSL=false
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql
